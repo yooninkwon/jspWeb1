@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../css/nstyle.css" />
 </head>
 <body>
-<h3>noticeDetail.jsp</h3>
+<h3>noticeEdit.jsp</h3>
 <%
 String seq=request.getParameter("c");
 String sql="select seq,title,writer,content,regdate,hit from notices where seq="+seq;
@@ -28,6 +28,7 @@ ResultSet rs=stmt.executeQuery(sql);
 rs.next();
 
 %>
+<form action="noticeEditProc.jsp" method="post">
 <table class="twidth">
 	<colgroup>
 		<col width="15%" />
@@ -51,11 +52,20 @@ rs.next();
 		</tr>
 		<tr>
 			<th class="left">제목</th>
-			<td colspan="3"><%=rs.getString("title") %></td>
+			<td colspan="3">
+				<input type="text" class="inp" name="title" value="<%=rs.getString("title") %>" />
+			
+			
+			
+			
+			</td>
 		</tr>
 		<tr>
 			<th class="left">내용</th>
-			<td colspan="3" id="content"><%=rs.getString("content") %></td>
+			<td colspan="3" id="content">
+				<textarea name="content" >
+			<%=rs.getString("content") %></textarea>
+			</td>
 		</tr>
 		<tr>
 			<th class="left">첨부</th>
@@ -65,10 +75,11 @@ rs.next();
 	</tbody>
 
 </table>
+<input type="hidden" name="c" value="<%=rs.getInt("seq") %>" />
+<input type="submit" value="수정하기" />
+<a href="noticeDetail.jsp?c=<%=rs.getInt("seq") %>">취소</a>
+</form>
 
-<a href="./noticeEdit.jsp?c=<%=rs.getInt("seq")%>">수정하기</a>
-<a href="">삭제</a>
-<a href="./notice.jsp">목록</a>
 </body>
 </html>
 
